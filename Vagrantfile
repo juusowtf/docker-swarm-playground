@@ -8,7 +8,7 @@ boxes = [ { name: "manager1", image: "debian/jessie64", private_ip: "192.168.20.
 Vagrant.configure(2) do |config|
 
   boxes.each do |box|
-    box_name = "ansible-docker-#{box[:name]}"
+    box_name = "#{box[:name]}"
     config.vm.define box_name do |env|
       env.vm.box = box[:image]
       env.vm.hostname = box_name
