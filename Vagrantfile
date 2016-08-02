@@ -23,9 +23,13 @@ Vagrant.configure(2) do |config|
       env.vm.network :private_network, ip: box[:private_ip]
 
       env.vm.provision :ansible do |ansible|
-        ansible.playbook = "provision.yml"
+        ansible.limit = "#{box[:name]}"
+        ansible.playbook = "./provision.yml"
+        ansible.inventory_path = "./inventory"
       end
+
     end
   end
+
 
 end
