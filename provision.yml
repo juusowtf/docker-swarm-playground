@@ -1,6 +1,18 @@
 ---
 - hosts: swarm
+  serial: 1
   become: yes
   become_user: root
   roles:
     - { role: jzmch.ansible-docker, docker_users: vagrant }
+
+- hosts: managers
+  serial: 1
+  roles:
+    - docker-swarm-manager
+
+- hosts: workers
+  vars:
+    docker_swarm_worker_token: "{{ hostvars['manager1']['docker_swarm_worker_token'] }}"
+  roles:
+    - docker-swarm-worker
