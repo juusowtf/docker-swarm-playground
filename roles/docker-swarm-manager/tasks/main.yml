@@ -1,0 +1,18 @@
+---
+- name: Check if swarm is already initialized
+  shell: "docker node ls -q"
+  register: docker_node_ls
+  changed_when: no
+  ignore_errors: yes
+
+- name: Initialize manager
+  shell: "docker swarm init --advertise-addr {{ swarm_manager_ip }}"
+  when: docker_node_ls.rc != 0
+
+- name: Get swarm worker token
+  shell: "docker swarm join-token worker -q"
+  register: docker_swarm_worker_token_query
+
+- name: Set swarm worker token as a fact
+  set_fact:
+    docker_swarm_worker_token: "{{ docker_swarm_worker_token_query.stdout }}"
