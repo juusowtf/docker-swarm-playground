@@ -1,12 +1,12 @@
 [managers]
-manager1 ansible_host=192.168.37.101
-manager2 ansible_host=192.168.37.102
-manager3 ansible_host=192.168.37.103
+manager1 ansible_host=192.168.37.11
+manager2 ansible_host=192.168.37.12
+manager3 ansible_host=192.168.37.13
 
 [workers]
-worker1 ansible_host=192.168.37.104
-worker2 ansible_host=192.168.37.105
-worker3 ansible_host=192.168.37.106
+worker1 ansible_host=192.168.37.14
+worker2 ansible_host=192.168.37.15
+worker3 ansible_host=192.168.37.16
 
 [swarm:children]
 managers
