@@ -1,0 +1,5 @@
+---
+- hosts: workers
+  serial: 1
+  roles:
+    - docker-swarm-worker

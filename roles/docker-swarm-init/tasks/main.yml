@@ -1,25 +1,28 @@
 ---
-- name: Check if already part of swarm
+- name: Check if a swarm already exists
   command: "{{ docker_binary }} node ls -q"
-  register: docker_swarm_check
+  register: docker_swarm_exists_check
   changed_when: no
   ignore_errors: yes
 
-- name: Initialize swarm
-  command: "{{ docker_binary }} swarm init --advertise-addr {{ swarm_manager_ips[0] }}"
-  when: docker_swarm_check.rc != 0 and swarm_manager_ips is defined
+- block:
+    - name: Initialize swarm
+      command: "{{ docker_binary }} swarm init --advertise-addr {{ swarm_manager_ips[0] }}"
+      when: swarm_manager_ips is defined
 
-- name: Get swarm manager token
-  command: "{{ docker_binary }} swarm join-token manager -q"
-  changed_when: no
-  register: docker_swarm_manager_token_query
+    - name: Get swarm manager token
+      command: "{{ docker_binary }} swarm join-token manager -q"
+      changed_when: no
+      register: docker_swarm_manager_token_query
 
-- name: Get swarm worker token
-  command: "{{ docker_binary }} swarm join-token worker -q"
-  changed_when: no
-  register: docker_swarm_worker_token_query
+    - name: Save swarm manager token to file
+      local_action: "copy content={{ docker_swarm_manager_token_query.stdout }} dest={{ docker_swarm_manager_token_file }}"
 
-- name: Set swarm token as facts
-  set_fact:
-    docker_swarm_manager_token: "{{ docker_swarm_manager_token_query.stdout }}"
-    docker_swarm_worker_token: "{{ docker_swarm_worker_token_query.stdout }}"
+    - name: Get swarm worker token
+      command: "{{ docker_binary }} swarm join-token worker -q"
+      changed_when: no
+      register: docker_swarm_worker_token_query
+
+    - name: Save swarm worker token to file
+      local_action: "copy content={{ docker_swarm_worker_token_query.stdout }} dest={{ docker_swarm_worker_token_file }}"
+  when: docker_swarm_exists_check.rc != 0

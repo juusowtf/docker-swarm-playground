@@ -6,5 +6,5 @@
   ignore_errors: yes
 
 - name: Join cluster as a manager
-  command: "{{ docker_binary }} swarm join --token {{ hostvars[groups['managers'][0]]['docker_swarm_manager_token'] }} {{ swarm_manager_ips[0] }}:2377"
+  command: "{{ docker_binary }} swarm join --token {{ lookup('file', docker_swarm_worker_token_file) }} {{ swarm_manager_ips[0] }}:2377"
   when: docker_node_ls.rc != 0 and inventory_hostname != groups["managers"][0]

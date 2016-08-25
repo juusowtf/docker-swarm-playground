@@ -1,2 +1,4 @@
 ---
 docker_binary: /usr/bin/docker
+docker_swarm_manager_token_file: ~/.secrets/docker_swarm_manager_token
+docker_swarm_worker_token_file: ~/.secrets/docker_swarm_worker_token

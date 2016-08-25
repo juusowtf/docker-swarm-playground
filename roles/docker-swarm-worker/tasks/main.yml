@@ -1,4 +1,4 @@
 ---
 - name: Join swarm as a worker
-  command: "{{ docker_binary }} swarm join --token {{ hostvars[groups['managers'][0]]['docker_swarm_worker_token'] }} {{ swarm_manager_ips[0] }}:2377"
+  command: "{{ docker_binary }} swarm join --token {{ lookup('file', docker_swarm_worker_token_file) }} {{ swarm_manager_ips[0] }}:2377"
   ignore_errors: yes

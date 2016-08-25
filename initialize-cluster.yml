@@ -1,10 +1,4 @@
 ---
-- hosts: swarm
-  become: yes
-  become_user: root
-  roles:
-    - { role: jzmch.ansible-docker, docker_users: vagrant }
-
 - hosts: managers
   serial: 1
   roles:
