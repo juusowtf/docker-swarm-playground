@@ -1,2 +1,2 @@
 ---
-swarm_manager_ip: 192.168.99.100
+docker_binary: /usr/bin/docker

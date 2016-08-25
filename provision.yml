@@ -1,6 +1,5 @@
 ---
 - hosts: swarm
-  serial: 1
   become: yes
   become_user: root
   roles:
@@ -9,10 +8,10 @@
 - hosts: managers
   serial: 1
   roles:
-    - docker-swarm-manager
+    - { role: docker-swarm-init, when: "inventory_hostname == groups['managers'][0]" }
+    - { role: docker-swarm-manager, when: "inventory_hostname != groups['managers'][0]" }
 
 - hosts: workers
-  vars:
-    docker_swarm_worker_token: "{{ hostvars['manager1']['docker_swarm_worker_token'] }}"
+  serial: 1
   roles:
-    - docker-swarm-worker
+    - { role: docker-swarm-worker }

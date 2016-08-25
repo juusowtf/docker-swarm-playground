@@ -1,3 +1,4 @@
 ---
-- name: Add worker to swarm
-  shell: "docker swarm join --token {{ docker_swarm_worker_token }} {{ swarm_manager_ip }}:2377"
+- name: Join swarm as a worker
+  shell: "{{ docker_binary }} swarm join --token {{ hostvars[groups['managers'][0]]['docker_swarm_worker_token'] }} {{ swarm_manager_ips[0] }}:2377"
+  ignore_errors: yes
