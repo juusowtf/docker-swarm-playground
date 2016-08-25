@@ -15,6 +15,7 @@ ansible-galaxy install -r roles.yml
 vagrant up
 ansible-playbook install-docker.yml
 # Because of a bug in the jzmch.ansible-docker role, you have to reload the servers so Ansible can find the docker daemon.
+# I will fix this soonish.
 vagrant reload
 ansible-playbook initialize-cluster.yml
 ```
