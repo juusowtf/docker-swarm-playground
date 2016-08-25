@@ -1,16 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-boxes = [ { name: "manager1", image: "debian/jessie64", private_ip: "192.168.99.100" },
-          { name: "worker1", image: "debian/jessie64", private_ip: "192.168.99.101" },
-          { name: "worker2", image: "debian/jessie64", private_ip: "192.168.99.102" } ]
+num_instances = 6
+box_image = "debian/jessie64"
 
 Vagrant.configure(2) do |config|
 
-  boxes.each do |box|
-    box_name = "#{box[:name]}"
+  (1..num_instances).each do |i|
+    box_name = "swarm-node-#{i}"
     config.vm.define box_name do |env|
-      env.vm.box = box[:image]
+      env.vm.box = box_image
       env.vm.hostname = box_name
 
       env.vm.provider :virtualbox do |vb|
@@ -20,9 +19,8 @@ Vagrant.configure(2) do |config|
       end
 
       env.ssh.insert_key = false
-      env.vm.network :private_network, ip: box[:private_ip]
+      env.vm.network :private_network, ip: "192.168.37.10#{i}"
     end
   end
-
 
 end
