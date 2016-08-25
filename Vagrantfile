@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = box_image
 
   (1..num_managers).each do |i|
-    box_name = "manager-#{i}"
+    box_name = "manager#{i}"
     config.vm.define box_name do |env|
       env.vm.hostname = box_name
 
@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
   end
 
   (1..num_workers).each do |i|
-    box_name = "worker-#{i}"
+    box_name = "worker#{i}"
     config.vm.define box_name do |env|
       env.vm.hostname = box_name
 
