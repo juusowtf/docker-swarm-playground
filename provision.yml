@@ -8,8 +8,8 @@
 - hosts: managers
   serial: 1
   roles:
-    - { role: docker-swarm-init, when: "inventory_hostname == groups['managers'][0]" }
-    - { role: docker-swarm-manager, when: "inventory_hostname != groups['managers'][0]" }
+    - { role: docker-swarm-init, when: initial_leader is defined }
+    - { role: docker-swarm-manager, when: initial_leader is not defined }
 
 - hosts: workers
   serial: 1

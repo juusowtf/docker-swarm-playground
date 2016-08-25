@@ -1,10 +1,10 @@
 ---
 - name: Check if already part of swarm
-  shell: "{{ docker_binary }} node ls -q"
+  command: "{{ docker_binary }} node ls -q"
   register: docker_node_ls
   changed_when: no
   ignore_errors: yes
 
 - name: Join cluster as a manager
-  shell: "{{ docker_binary }} swarm join --token {{ hostvars[groups['managers'][0]]['docker_swarm_manager_token'] }} {{ swarm_manager_ips[0] }}:2377"
+  command: "{{ docker_binary }} swarm join --token {{ hostvars[groups['managers'][0]]['docker_swarm_manager_token'] }} {{ swarm_manager_ips[0] }}:2377"
   when: docker_node_ls.rc != 0 and inventory_hostname != groups["managers"][0]
