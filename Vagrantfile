@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
         vb.memory = vm_memory
       end
 
-      env.vm.network :private_network, ip: "192.168.37.1#{i}"
+      env.vm.network :private_network, ip: "192.168.37.1#{num_managers + i}"
     end
   end
 
