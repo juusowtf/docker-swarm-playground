@@ -1,0 +1,5 @@
+---
+- hosts: managers
+  serial: 1
+  roles:
+    - { role: docker-swarm-manager, when: initial_leader is not defined }
