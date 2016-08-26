@@ -2,6 +2,8 @@
 
 A Vagrant environment for testing Docker Swarm mode in Docker 1.12.
 
+**NOTE:** This project is mainly meant for (me) testing how to set up a cluster in swarm mode with Ansible. If you want to only test the new features of v1.12, it's almost always better to just use Docker Machine via [Docker Toolbox](https://www.docker.com/products/docker-toolbox).
+
 ## Requirements
 
 - Vagrant
